@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.741,
+        "y": 4.45
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.654831484976029,
+        "y": 0.8517695747377186
+      },
+      "isLocked": false,
+      "linkedName": "Podium Start"
+    },
+    {
+      "anchor": {
+        "x": 8.0,
+        "y": 0.75
+      },
+      "prevControl": {
+        "x": 7.05134490769876,
+        "y": 0.7636554807993345
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Note 8"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": 0.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": -60.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

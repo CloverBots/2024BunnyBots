@@ -1,0 +1,68 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.0,
+        "y": 0.75
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.72825989659135,
+        "y": 3.5979921691507073
+      },
+      "isLocked": false,
+      "linkedName": "Note 8"
+    },
+    {
+      "anchor": {
+        "x": 6.20347944921242,
+        "y": 3.873400422857184
+      },
+      "prevControl": {
+        "x": 7.186282541579168,
+        "y": 3.3241869300640015
+      },
+      "nextControl": {
+        "x": 5.218977194095154,
+        "y": 4.423563447775656
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.3,
+        "y": 5.0
+      },
+      "prevControl": {
+        "x": 4.760378465300759,
+        "y": 4.71410402570358
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Stage Shot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -10.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

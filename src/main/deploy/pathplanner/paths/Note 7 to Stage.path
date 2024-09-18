@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.0,
+        "y": 2.55
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.200948934992683,
+        "y": 4.346961967626977
+      },
+      "isLocked": false,
+      "linkedName": "Note 7"
+    },
+    {
+      "anchor": {
+        "x": 4.3,
+        "y": 5.0
+      },
+      "prevControl": {
+        "x": 5.171577570346555,
+        "y": 4.391019014596169
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Stage Shot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 360.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -10.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": null,
+  "previewStartingState": {
+    "rotation": -20.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}
