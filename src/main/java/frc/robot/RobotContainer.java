@@ -35,7 +35,7 @@ public class RobotContainer {
     private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(gyro);
 
     private final XboxController driverController = new XboxController(Constants.CONTROLLER_DRIVE_PORT);
-    private final XboxController operatorController = new XboxController(Constants.CONTROLLER_OPERATOR_PORT);
+    //private final XboxController operatorController = new XboxController(Constants.CONTROLLER_OPERATOR_PORT);
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */

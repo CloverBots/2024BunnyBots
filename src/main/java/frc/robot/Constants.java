@@ -37,9 +37,11 @@ public final class Constants {
         public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = (1 / DRIVE_GEAR_RATIO) * (6380.0 / 60)
                 * WHEEL_CIRCUMFERENCE;
 
-        // Speeds for the robot when moving, all are in Meters/Second
+        // Speeds for the robot when moving, in Meters/Second
         public static final double TELEOP_MAX_SPEED_METERS_PER_SECOND = 0.5; // Max is 5.5435
         public static final double AUTO_MAX_SPEED_METERS_PER_SECOND = 0.3;
+
+        // Rotation speed multiplier to the (-1, 1) input given by the joystick
         public static final double teleOpNormalAngularSpeed = 0.3;
         public static final double teleOpSlowAngularSpeed = 0.1;
 
