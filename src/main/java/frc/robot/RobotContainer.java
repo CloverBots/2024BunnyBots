@@ -60,7 +60,7 @@ public class RobotContainer {
                 new DriveCommand(
                         swerveSubsystem,
                         () -> getScaledXY(),
-                        () -> scaleRotationAxis(driverController.getRightX()), driverController.getLeftTriggerAxis()));
+                        () -> scaleRotationAxis(driverController.getRightX())));
 
         configureBindings();
     }
@@ -112,7 +112,13 @@ public class RobotContainer {
     }
 
     private double scaleRotationAxis(double input) {
-        return deadband(squared(input), DriveConstants.deadband) * swerveSubsystem.getMaxAngleVelocity() * -0.6;
+        double rotation = -deadband(squared(input), DriveConstants.deadband) * swerveSubsystem.getMaxAngleVelocity();
+        if (driverController.getLeftTriggerAxis() > 0.5) {
+            rotation = rotation * Constants.DriveConstants.TELEOP_SLOW_ANGULAR_SCALE_FACTOR;
+        } else {
+            rotation = rotation * Constants.DriveConstants.TELEOP_NORMAL_ANGULAR_SCALE_FACTOR;
+        }
+        return rotation;
     }
 
     private double deadband(double input, double deadband) {
@@ -144,6 +150,10 @@ public class RobotContainer {
         xy[0] = r * Math.cos(theta);
         xy[1] = r * Math.sin(theta);
 
+        if (driverController.getLeftTriggerAxis() > 0.5) {
+            xy[0] = xy[0] / 2;
+            xy[1] = xy[1] / 2;
+        }
         return xy;
     }
 }

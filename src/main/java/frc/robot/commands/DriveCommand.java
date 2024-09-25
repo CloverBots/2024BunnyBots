@@ -8,7 +8,6 @@ import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.*;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class DriveCommand extends Command {
@@ -16,15 +15,12 @@ public class DriveCommand extends Command {
   private final SwerveSubsystem drivebase;
   private final Supplier<double[]> speedXY;
   private final DoubleSupplier rot;
-  private final double leftTrigger;
   public static boolean lockOnMode = false;
 
-  public DriveCommand(SwerveSubsystem drivebase, Supplier<double[]> speedXY, DoubleSupplier rot,
-      double leftTrigger) {
+  public DriveCommand(SwerveSubsystem drivebase, Supplier<double[]> speedXY, DoubleSupplier rot) {
     this.drivebase = drivebase;
     this.speedXY = speedXY;
     this.rot = rot;
-    this.leftTrigger = leftTrigger;
 
     addRequirements(this.drivebase);
   }
@@ -37,16 +33,6 @@ public class DriveCommand extends Command {
   public void execute() {
     var xy = speedXY.get();
     var r = rot.getAsDouble();
-
-    if (rot.getAsDouble() > DriveConstants.deadband) {
-      r = DriveConstants.teleOpNormalAngularSpeed;
-    }
-
-    if (leftTrigger > 0.5) {
-      xy[0] = xy[0] / 2;
-      xy[1] = xy[1] / 2;
-      r = DriveConstants.teleOpSlowAngularSpeed;
-    }
 
     drivebase.defaultDrive(-xy[1], -xy[0], r);
   }
