@@ -35,19 +35,20 @@ public final class Constants {
         public static final double wheelBase = Units.inchesToMeters(18.5);
         public static final double trackWidth = Units.inchesToMeters(18.5);
         // This equates to about 5.5435 m/s
-        public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = (1 / DRIVE_GEAR_RATIO) * (KRAKEN_FREE_SPEED / 60)
-                * WHEEL_CIRCUMFERENCE; // Max is 5.2134
+        public static final double PHYSICAL_MAX_SPEED_METERS_PER_SECOND = (1 / DRIVE_GEAR_RATIO)
+                * (KRAKEN_FREE_SPEED / 60)
+                * WHEEL_CIRCUMFERENCE; // Max is 5.2134 meter/sec
 
-        public static final double PHYSICAL_MAX_ROTATION_SPEED = (1 / TURNING_GEAR_RATIO) * (KRAKEN_FREE_SPEED / 60)
-                * WHEEL_CIRCUMFERENCE; // Max is 1.4896
+        // Max is 47.2215 rad/sec, which is ~7.5 rotations per second
+        public static final double PHYSICAL_MAX_ROTATION_SPEED = PHYSICAL_MAX_SPEED_METERS_PER_SECOND / ModuleLocations.robotRadius;
 
         // Speeds for the robot when moving, in Meters/Second
         public static final double TELEOP_MAX_SPEED_METERS_PER_SECOND = 0.5;
         public static final double AUTO_MAX_SPEED_METERS_PER_SECOND = 0.3;
 
         // Rotation speed multiplier to the (-1, 1) input given by the joystick
-        public static final double TELEOP_NORMAL_ANGULAR_SCALE_FACTOR = 0.6;
-        public static final double TELEOP_SLOW_ANGULAR_SCALE_FACTOR = 0.3;
+        public static final double TELEOP_NORMAL_ANGULAR_SCALE_FACTOR = 0.3;
+        public static final double TELEOP_SLOW_ANGULAR_SCALE_FACTOR = 0.1;
 
         public static final double DRIVE_ENCODER_TO_METERS = (WHEEL_CIRCUMFERENCE / (DRIVE_GEAR_RATIO * 2048.0));
         public static final double DRIVE_ENCODER_VELOCITY_TO_METERS_PER_SECOND = (600.0 * WHEEL_CIRCUMFERENCE)
@@ -73,7 +74,7 @@ public final class Constants {
 
         public static final class ModuleLocations {
             public static final double dist = Units.inchesToMeters(9.25);
-            public static final double robotRaduius = Math.sqrt(2 * Math.pow(dist, 2));
+            public static final double robotRadius = Math.sqrt(2 * Math.pow(dist, 2));
             public static final Translation2d frontLeft = new Translation2d(dist, dist);
             public static final Translation2d frontRight = new Translation2d(dist, -dist);
             public static final Translation2d backLeft = new Translation2d(-dist, dist);

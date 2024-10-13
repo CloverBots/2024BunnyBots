@@ -87,7 +87,7 @@ public class SwerveSubsystem extends SubsystemBase {
             new PIDConstants(TranslationPID.p, TranslationPID.i, TranslationPID.d), // Translation PID constants
             new PIDConstants(RotationPID.p, RotationPID.i, RotationPID.d), // Rotation PID constants
             Constants.DriveConstants.AUTO_MAX_SPEED_METERS_PER_SECOND, // Max module speed, in m/s
-            ModuleLocations.robotRaduius, // Drive base radius in meters. Distance from robot center to furthest module.
+            ModuleLocations.robotRadius, // Drive base radius in meters. Distance from robot center to furthest module.
             new ReplanningConfig()), // Default path replanning config. See the API for the options here
         // Boolean supplier that controls when the path will be mirrored for the red
         // alliance
