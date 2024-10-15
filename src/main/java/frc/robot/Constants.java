@@ -8,18 +8,6 @@ import modulelib.SwerveModuleConfig;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean
- * constants. This class should not be used for any other purpose. All constants
- * should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the
- * constants are needed, to reduce verbosity.
- */
 public final class Constants {
     public static final int CONTROLLER_DRIVE_PORT = 0;
     public static final int CONTROLLER_OPERATOR_PORT = 1;
@@ -30,7 +18,6 @@ public final class Constants {
         // All for MK4i modules
         public static final double WHEEL_CIRCUMFERENCE = Units.inchesToMeters(4) * Math.PI;
         public static final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0);
-        public static final double TURNING_GEAR_RATIO = 150.0 / 7.0;
         public static final double KRAKEN_FREE_SPEED = 6000.0;
         public static final double wheelBase = Units.inchesToMeters(18.5);
         public static final double trackWidth = Units.inchesToMeters(18.5);
@@ -39,10 +26,10 @@ public final class Constants {
                 * (KRAKEN_FREE_SPEED / 60)
                 * WHEEL_CIRCUMFERENCE; // Max is 5.2134 meter/sec
 
-        // Max is 47.2215 rad/sec, which is ~7.5 rotations per second
+        // Max is 15.6903 rad/sec, which is ~2.5 rotations per second
         public static final double PHYSICAL_MAX_ROTATION_SPEED = PHYSICAL_MAX_SPEED_METERS_PER_SECOND / ModuleLocations.robotRadius;
 
-        // Speeds for the robot when moving, in Meters/Second
+        // Set speeds for the robot when moving, in Meters/Second
         public static final double TELEOP_MAX_SPEED_METERS_PER_SECOND = 0.5;
         public static final double AUTO_MAX_SPEED_METERS_PER_SECOND = 0.3;
 
@@ -84,13 +71,13 @@ public final class Constants {
 
     public static final class PathPlannerConstants {
         public static final class TranslationPID {
-            public static final double p = 3; // 4 (Non carpet); 3 (Carpet)
+            public static final double p = 3;
             public static final double i = 0;
             public static final double d = 0;
         }
 
         public static final class RotationPID {
-            public static final double p = 4; // 2 (Non carpet); 4 (Carpet)
+            public static final double p = 4;
             public static final double i = 0;
             public static final double d = 0;
         }
