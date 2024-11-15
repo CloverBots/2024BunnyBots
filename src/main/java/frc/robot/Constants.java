@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import modulelib.SwerveModuleConfig;
@@ -11,7 +7,6 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
     public static final int CONTROLLER_DRIVE_PORT = 0;
     public static final int CONTROLLER_OPERATOR_PORT = 1;
-    public static final int LED_ID = 2;
     public static final int CURRENT_LIMIT = 100;
 
     public static final class DriveConstants {
@@ -46,7 +41,7 @@ public final class Constants {
         public static final int currentLimit = 40;
         public static final double slewRate = 50; // lower number for higher center of mass
 
-        public static final class SwervePID { // TO-DO: Play around with these, they may affect auto performance
+        public static final class SwervePID {
             public static final double p = 0.12;
             public static final double i = 0;
             public static final double d = 0.0015;

@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -19,15 +15,6 @@ import frc.robot.Constants.*;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.SwerveSubsystem;
 
-/**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
     private final AHRS gyro = new AHRS();
     private final Field2d field;
@@ -36,9 +23,7 @@ public class RobotContainer {
 
     private final XboxController driverController = new XboxController(Constants.CONTROLLER_DRIVE_PORT);
     //private final XboxController operatorController = new XboxController(Constants.CONTROLLER_OPERATOR_PORT);
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
+
     public RobotContainer() {
         field = new Field2d();
         SmartDashboard.putData("Field", field);
