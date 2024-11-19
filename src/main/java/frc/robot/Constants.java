@@ -7,6 +7,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
     public static final int CONTROLLER_DRIVE_PORT = 0;
     public static final int CONTROLLER_OPERATOR_PORT = 1;
+    public static final int GYRO_ID = 5;
     public static final int CURRENT_LIMIT = 100;
 
     public static final class DriveConstants {

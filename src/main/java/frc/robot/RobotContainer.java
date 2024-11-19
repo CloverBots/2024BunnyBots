@@ -1,6 +1,6 @@
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
@@ -16,7 +16,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.SwerveSubsystem;
 
 public class RobotContainer {
-    private final AHRS gyro = new AHRS();
+    private final Pigeon2 gyro = new Pigeon2(Constants.GYRO_ID);
     private final Field2d field;
     private final SendableChooser<Command> autoChooser;
     private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(gyro);

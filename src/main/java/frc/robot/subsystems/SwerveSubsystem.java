@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.Optional;
 
-import com.kauailabs.navx.frc.AHRS;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
@@ -24,7 +24,6 @@ import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -34,7 +33,7 @@ import frc.robot.Constants.PathPlannerConstants.RotationPID;
 import frc.robot.Constants.PathPlannerConstants.TranslationPID;
 
 public class SwerveSubsystem extends SubsystemBase {
-  private AHRS gyro;
+  private Pigeon2 gyro;
   private static Rotation2d ppRotationOverride;
   public boolean rotationOverride = false;
 
@@ -65,7 +64,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private BooleanEntry fieldOrientedEntry;
 
   /** Creates a new Drivebase. */
-  public SwerveSubsystem(AHRS gyro) {
+  public SwerveSubsystem(Pigeon2 gyro) {
     var inst = NetworkTableInstance.getDefault();
     var table = inst.getTable("SmartDashboard");
     this.fieldOrientedEntry = table.getBooleanTopic("Field Oriented").getEntry(true);
@@ -132,7 +131,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public double getFieldAngle() {
-    return -gyro.getYaw();
+    return -gyro.getAngle();
   }
 
   public void fieldOrientedDrive(double speedX, double speedY, double rot) {
@@ -242,8 +241,6 @@ public class SwerveSubsystem extends SubsystemBase {
     odometry.update(gyro.getRotation2d(), positions);
 
     field.setRobotPose(getPose());
-
-    SmartDashboard.putNumber("Gyro", gyro.getYaw());
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
