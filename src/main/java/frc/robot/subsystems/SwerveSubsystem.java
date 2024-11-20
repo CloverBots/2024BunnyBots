@@ -4,10 +4,11 @@ import java.util.Optional;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.PIDConstants;
-import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import modulelib.SwerveModule;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -74,45 +75,33 @@ public class SwerveSubsystem extends SubsystemBase {
     odometry = new SwerveDriveOdometry(kinematics, gyro.getRotation2d(), getPositions());
 
     // Configure AutoBuilder for PathPlanner
-    try {
-      RobotConfig config = RobotConfig.fromGUISettings();
+   AutoBuilder.configureHolonomic(
+        this::getPose, // Robot pose supplier
+        this::resetPose, // Method to reset odometry
+        this::getCurrentSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+        this::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+        new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
+            new PIDConstants(TranslationPID.p, TranslationPID.i, TranslationPID.d), // Translation PID constants
+            new PIDConstants(RotationPID.p, RotationPID.i, RotationPID.d), // Rotation PID constants
+            Constants.DriveConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND,
+            ModuleLocations.robotRadius,
+            new ReplanningConfig()),
+        () -> {
+          var alliance = DriverStation.getAlliance();
+          if (alliance.isPresent()) {
+          return alliance.get() == DriverStation.Alliance.Red;
+          }
+          return false;
+        },
+        this); // Reference to this subsystem to set requirements
 
-      // Configure AutoBuilder
-      AutoBuilder.configure(
-          this::getPose,
-          this::resetPose,
-          this::getCurrentSpeeds,
-          this::drive,
-          new PPHolonomicDriveController(
-              new PIDConstants(
-                  TranslationPID.p,
-                  TranslationPID.i,
-                  TranslationPID.d),
-              new PIDConstants(
-                  RotationPID.p,
-                  RotationPID.i,
-                  RotationPID.d)),
-          config,
-          () -> {
-            // Boolean supplier that controls when the path will be mirrored for the red
-            // alliance
-            // This will flip the path being followed to the red side of the field.
-            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent()) {
-              return alliance.get() == DriverStation.Alliance.Red;
-            }
-            return false;
-          },
-          this);
-    } catch (Exception e) {
-      DriverStation.reportError(
-          "Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
-    }
-
-    // Set up custom logging to add the current path to a field 2d widget
     PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
+    SmartDashboard.putData("Field", field);
+
+    // This resets the target rotation to align with the april tag.
+    if (rotationOverride) {
+        PPHolonomicDriveController.setRotationTargetOverride(this::getRotationTargetOverride);
+    }
   }
 
   public Optional<Rotation2d> getRotationTargetOverride() {
