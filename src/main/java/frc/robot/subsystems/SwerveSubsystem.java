@@ -24,6 +24,7 @@ import edu.wpi.first.networktables.BooleanEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -241,6 +242,8 @@ public class SwerveSubsystem extends SubsystemBase {
     odometry.update(gyro.getRotation2d(), positions);
 
     field.setRobotPose(getPose());
+
+    SmartDashboard.putNumber("Gyro", getFieldAngle());
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
