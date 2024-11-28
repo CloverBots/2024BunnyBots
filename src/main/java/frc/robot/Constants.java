@@ -3,12 +3,15 @@ package frc.robot;
 import modulelib.SwerveModuleConfig;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
+import limelight.LimelightConfiguration;
 
 public final class Constants {
     public static final int CONTROLLER_DRIVE_PORT = 0;
     public static final int CONTROLLER_OPERATOR_PORT = 1;
     public static final int GYRO_ID = 5;
-    public static final int CURRENT_LIMIT = 100;
+    public static final int TALON_SRX_ID = 6;
+    public static final int PIVOT_MOTOR = 7;
+    public static final int CURRENT_LIMIT = 60;
 
     public static final class DriveConstants {
         // All for MK4i modules
@@ -77,5 +80,25 @@ public final class Constants {
             public static final double i = 0;
             public static final double d = 0;
         }
+    }
+
+    public static final class SuperstructureConstants {
+        public static final double INTAKE_SPEED = 0.2; //Increase after testing
+        public static final double LOWER_ENDPOINT = 0; //TO-DO set
+        public static final double UPPER_ENDPOINT = 0;
+
+        public static final double STOW_SET_POINT = 0;
+        public static final double SCORE_SET_POINT = 0;
+        public static final double INTAKE_SET_POINT = 0;
+    }
+
+     public static final class VisonConstants {
+        private static final double VISION_TARGET_HEIGHT = 7.75; // AprilTag 1-12
+        private static final double CAMERA_HEIGHT = 18; // inches
+        private static final double CAMERA_PITCH = 0; // degrees
+        public final static LimelightConfiguration visionConfiguration = new LimelightConfiguration(
+                VISION_TARGET_HEIGHT,
+                CAMERA_HEIGHT,
+                CAMERA_PITCH);
     }
 }
