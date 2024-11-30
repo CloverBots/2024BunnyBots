@@ -71,9 +71,7 @@ public class RobotContainer {
 
     // Will run once any time the robot is enabled, in any mode (Doesn't matter if
     // Teleop / Autonomous)
-    public void onEnable() {
-        resetGyro();
-    }
+    public void onEnable() {}
 
     public static Alliance getAlliance() {
         return DriverStation.getAlliance().isEmpty() ? Alliance.Blue : DriverStation.getAlliance().get();

@@ -15,8 +15,10 @@ public final class Constants {
 
     public static final class DriveConstants {
         // All for MK4i modules
-        public static final double WHEEL_CIRCUMFERENCE = Units.inchesToMeters(4) * Math.PI;
+        public static final double WHEEL_RADIUS = Units.inchesToMeters(4);
+        public static final double WHEEL_CIRCUMFERENCE = WHEEL_RADIUS * Math.PI;
         public static final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0);
+        public static final double ANGLE_GEAR_RATIO = 150.0 / 7.0;
         public static final double KRAKEN_FREE_SPEED = 6000.0;
         public static final double wheelBase = Units.inchesToMeters(18.5);
         public static final double trackWidth = Units.inchesToMeters(18.5);
@@ -43,7 +45,7 @@ public final class Constants {
         public static final double MAX_VOLTAGE = 12;
         public static final double deadband = 0.08;
         public static final int currentLimit = 40;
-        public static final double slewRate = 50; // lower number for higher center of mass
+        public static final double slewRate = 10; // TO-DO see if this fixes acceleration problem
 
         public static final class SwervePID {
             public static final double p = 0.12;
