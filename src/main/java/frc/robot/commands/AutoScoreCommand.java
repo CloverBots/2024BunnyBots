@@ -14,7 +14,7 @@ public class AutoScoreCommand extends SequentialCommandGroup {
     public AutoScoreCommand(SwerveSubsystem swerveSubsystem, PivotSubsystem pivotSubsystem,
             IntakeSubsystem intakeSubsystem, LimelightTargetTracking limelightTargetTracking) {
         addCommands(
-                new InstantCommand(() -> pivotSubsystem.setPivotPosition(SuperstructureConstants.STOW_SET_POINT)),
+                new InstantCommand(() -> pivotSubsystem.setPivotPosition(SuperstructureConstants.PARK_SET_POINT)),
                 new InstantCommand(() -> swerveSubsystem.resetPose(new Pose2d())),
                 new AutoAimCommand(swerveSubsystem, limelightTargetTracking, 1.0),
                 new DriveToDistanceCommand(swerveSubsystem, -Units.inchesToMeters(72), 0, 0, 3.0)

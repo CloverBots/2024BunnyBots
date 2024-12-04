@@ -1,5 +1,14 @@
 package frc.robot.commands;
 
+/* 
+ * BUTTON MAPPING 
+ * To score position is Driver Left Bumper
+ * Score is Driver Right Bumper
+ * Intake is Driver Right Trigger
+ * Manual Pivot is Operator Back Button followed by Left Joystick
+ * Blow is Operator Controller B Button
+ */
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.function.DoubleSupplier;
@@ -8,6 +17,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.*;
+import frc.robot.subsystems.BlowerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.TimeOfFlightSubsystem;
@@ -16,7 +26,8 @@ public class SuperstructureCommand extends Command {
     private final TimeOfFlightSubsystem timeOfFlightSubsystem;
     private final PivotSubsystem pivotSubsystem;
     private final IntakeSubsystem intakeSubsystem;
-    private final Supplier<Boolean> scoreButton, prepareToScoreButton, backButton;
+    private final BlowerSubsystem blowerSubsystem;
+    private final Supplier<Boolean> scoreButton, prepareToScoreButton, backButton, blowButton;
     private final Supplier<Double> intakeLoadTrigger;
     private final DoubleSupplier leftJoystickY;
     private double pivotSpeed = 0;
@@ -26,7 +37,7 @@ public class SuperstructureCommand extends Command {
     private boolean ballonLoaded = false;
 
     public enum ACTION {
-        PARK, INTAKE, PREPARE_TO_SCORE, SCORE, CLIMB_MANUAL
+        PARK, INTAKE, PREPARE_TO_SCORE, SCORE, PIVOT_MANUAL, BLOWER
     }
 
     private ACTION mode;
@@ -35,20 +46,24 @@ public class SuperstructureCommand extends Command {
     public SuperstructureCommand(TimeOfFlightSubsystem timeOfFlightSubsystem,
             PivotSubsystem pivotSubsystem,
             IntakeSubsystem intakeSubsystem,
+            BlowerSubsystem blowerSubsystem,
             Supplier<Double> intakeLoadTrigger,
             Supplier<Boolean> prepareToScoreButton,
             Supplier<Boolean> scoreButton,
             Supplier<Boolean> backButton,
-            DoubleSupplier leftJoystickY) {
+            DoubleSupplier leftJoystickY,
+            Supplier<Boolean> blowButton) {
 
         this.timeOfFlightSubsystem = timeOfFlightSubsystem;
         this.pivotSubsystem = pivotSubsystem;
         this.intakeSubsystem = intakeSubsystem;
+        this.blowerSubsystem = blowerSubsystem;
         this.intakeLoadTrigger = intakeLoadTrigger;
         this.prepareToScoreButton = prepareToScoreButton;
         this.scoreButton = scoreButton;
         this.backButton = backButton;
         this.leftJoystickY = leftJoystickY;
+        this.blowButton = blowButton;
 
         timer = new Timer();
 
@@ -57,12 +72,13 @@ public class SuperstructureCommand extends Command {
         addRequirements(timeOfFlightSubsystem);
         addRequirements(pivotSubsystem);
         addRequirements(intakeSubsystem);
+        addRequirements(blowerSubsystem);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        pivotSubsystem.setPivotPosition(SuperstructureConstants.STOW_SET_POINT);
+        pivotSubsystem.setPivotPosition(SuperstructureConstants.PARK_SET_POINT);
         pivotSubsystem.enable();
     }
 
@@ -98,7 +114,7 @@ public class SuperstructureCommand extends Command {
                 }
                 break;
 
-            case CLIMB_MANUAL:
+            case PIVOT_MANUAL:
                 if (Math.abs(leftJoystickY.getAsDouble()) > .05) {
                     pivotSpeed = -leftJoystickY.getAsDouble() / 2.2;
                     if (pivotSpeed > 0.05 &&
@@ -120,6 +136,10 @@ public class SuperstructureCommand extends Command {
                 }
 
                 break;
+
+            case BLOWER:
+                blowerSubsystem.runBlower();
+                break;
         }
     }
 
@@ -134,7 +154,10 @@ public class SuperstructureCommand extends Command {
             mode = ACTION.SCORE;
             modeChanged = true;
         } else if (backButton.get()) {
-            mode = ACTION.CLIMB_MANUAL;
+            mode = ACTION.PIVOT_MANUAL;
+            modeChanged = true;
+        } else if (blowButton.get()) {
+            mode = ACTION.BLOWER;
             modeChanged = true;
         }
     }
@@ -152,11 +175,15 @@ public class SuperstructureCommand extends Command {
                 break;
 
             case PARK:
-                pivotSubsystem.setPivotPosition(SuperstructureConstants.STOW_SET_POINT);
+                pivotSubsystem.setPivotPosition(SuperstructureConstants.PARK_SET_POINT);
                 break;
 
-            case CLIMB_MANUAL:
+            case PIVOT_MANUAL:
                 pivotSubsystem.disable();
+                break;
+
+            case BLOWER:
+                blowerSubsystem.stop();
                 break;
         }
     }
@@ -167,6 +194,7 @@ public class SuperstructureCommand extends Command {
         intakeSubsystem.setIntakeSpeed(0);
         pivotSubsystem.setSpeed(0);
         pivotSubsystem.disable();
+        blowerSubsystem.stop();
     }
 
     // Returns true when the command should end.
@@ -190,7 +218,7 @@ public class SuperstructureCommand extends Command {
             case PREPARE_TO_SCORE:
                 break;
             case SCORE:
-                if (firing && timer.get() > 1) { // TO-DO tune
+                if (firing && timer.get() > 1) { // TO-DO tune time
                     firing = false;
                     mode = ACTION.PARK;
                     modeChanged = true;
@@ -198,11 +226,10 @@ public class SuperstructureCommand extends Command {
                 break;
 
             case PARK:
-            case CLIMB_MANUAL:
+            case PIVOT_MANUAL:
+            case BLOWER:
                 break;
-
         }
-
         return false;
     }
 }

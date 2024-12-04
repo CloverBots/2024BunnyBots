@@ -89,9 +89,11 @@ public final class Constants {
         public static final double LOWER_ENDPOINT = 0; //TO-DO set
         public static final double UPPER_ENDPOINT = 0;
 
-        public static final double STOW_SET_POINT = 0;
+        public static final double PARK_SET_POINT = 0;
         public static final double SCORE_SET_POINT = 0;
         public static final double INTAKE_SET_POINT = 0;
+
+        public static final double BLOWER_SPEED = 1;
     }
 
      public static final class VisonConstants {
