@@ -8,37 +8,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.SuperstructureConstants;
 
-public class IntakeSubsystem extends SubsystemBase {    
-    private final TalonSRX intakeMotor = new TalonSRX(Constants.TALON_SRX_ID);
+public class BlowerSubsystem extends SubsystemBase {    
+    private final TalonSRX blowerMotor = new TalonSRX(Constants.BLOWER_MOTOR_ID);
     private double speed;
     
-    public IntakeSubsystem() {
-        intakeMotor.setNeutralMode(NeutralMode.Brake);
-        intakeMotor.configContinuousCurrentLimit(30);
+    public BlowerSubsystem() {
+        blowerMotor.setNeutralMode(NeutralMode.Coast);
+        blowerMotor.configContinuousCurrentLimit(30);
     }
 
     public void periodic() {
-        intakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
+        blowerMotor.set(TalonSRXControlMode.PercentOutput, speed);
     }
 
-    public void runIntake(double speed) {
-        this.speed = speed;
-    }
-
-    public void runIntake() {
-        runIntake(SuperstructureConstants.INTAKE_SPEED);
-    }
-
-    public void setIntakeSpeed(double speed) {
-        intakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
+    public void runBlower() {
+        this.speed = SuperstructureConstants.BLOWER_SPEED;
     }
 
     public void stop() {
         speed = 0;
-        intakeMotor.set(TalonSRXControlMode.PercentOutput, 0);
-    }
-
-    public double getSpeed() {
-        return speed;
+        blowerMotor.set(TalonSRXControlMode.PercentOutput, 0);
     }
 }

@@ -16,6 +16,7 @@ import frc.robot.commands.AutoScoreCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.SuperstructureCommand;
 import frc.robot.Constants.*;
+import frc.robot.subsystems.BlowerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PivotSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -32,17 +33,19 @@ public class RobotContainer {
     private final TimeOfFlightSubsystem timeOfFlightSubsystem = new TimeOfFlightSubsystem();
     private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     private final PivotSubsystem pivotSubsystem = new PivotSubsystem();
+    private final BlowerSubsystem blowerSubsystem = new BlowerSubsystem();
 
     private final XboxController driverController = new XboxController(Constants.CONTROLLER_DRIVE_PORT);
     private final XboxController operatorController = new XboxController(Constants.CONTROLLER_OPERATOR_PORT);
 
     private final SuperstructureCommand superstructureCommand = new SuperstructureCommand(timeOfFlightSubsystem,
-            pivotSubsystem, intakeSubsystem,
+            pivotSubsystem, intakeSubsystem, blowerSubsystem,
             driverController::getRightTriggerAxis,
             driverController::getLeftBumper,
             operatorController::getBackButton,
             driverController::getRightBumper,
-            operatorController::getLeftY);
+            operatorController::getLeftY,
+            operatorController::getBButton);
 
     public RobotContainer() {
         field = new Field2d();
@@ -83,8 +86,11 @@ public class RobotContainer {
 
     public void teleopPeriodic() {
         timeOfFlightSubsystem.isBallonLoaded();
-        if (driverController.getStartButton() == true) {
+        if (driverController.getStartButton()) {
             resetGyro();
+        }
+        if (operatorController.getStartButton()) {
+            pivotSubsystem.resetPivotEncoder();
         }
     }
 

@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 import frc.robot.Constants.SuperstructureConstants;
@@ -36,7 +37,6 @@ public class PivotSubsystem extends PIDSubsystem {
 
     @Override
     public void useOutput(double output, double setpoint) {
-
         output = MathUtil.clamp(output, -0.1, 0.1);
         speed = output;
         if (pivotMotor != null) {
@@ -92,6 +92,8 @@ public class PivotSubsystem extends PIDSubsystem {
             speed = 0;
             disable();
         }
+
+        SmartDashboard.putNumber("Pivot Encoder", getPivotPosition());
 
         pivotMotor.set(speed);
     }

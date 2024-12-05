@@ -9,8 +9,9 @@ public final class Constants {
     public static final int CONTROLLER_DRIVE_PORT = 0;
     public static final int CONTROLLER_OPERATOR_PORT = 1;
     public static final int GYRO_ID = 5;
-    public static final int TALON_SRX_ID = 6;
+    public static final int INTAKE_MOTOR_ID = 6;
     public static final int PIVOT_MOTOR = 7;
+    public static final int BLOWER_MOTOR_ID = 8;
     public static final int CURRENT_LIMIT = 60;
 
     public static final class DriveConstants {
@@ -18,7 +19,7 @@ public final class Constants {
         public static final double WHEEL_RADIUS = Units.inchesToMeters(4);
         public static final double WHEEL_CIRCUMFERENCE = WHEEL_RADIUS * Math.PI;
         public static final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0);
-        public static final double ANGLE_GEAR_RATIO = 150.0 / 7.0;
+        public static final double TURN_GEAR_RATIO = 150.0 / 7.0;
         public static final double KRAKEN_FREE_SPEED = 6000.0;
         public static final double wheelBase = Units.inchesToMeters(18.5);
         public static final double trackWidth = Units.inchesToMeters(18.5);
@@ -44,8 +45,7 @@ public final class Constants {
 
         public static final double MAX_VOLTAGE = 12;
         public static final double deadband = 0.08;
-        public static final int currentLimit = 40;
-        public static final double slewRate = 10; // TO-DO see if this fixes acceleration problem
+        public static final double slewRate = 10; // TO-DO this should fix the acceleration problem
 
         public static final class SwervePID {
             public static final double p = 0.12;

@@ -9,7 +9,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.SuperstructureConstants;
 
 public class IntakeSubsystem extends SubsystemBase {    
-    private final TalonSRX intakeMotor = new TalonSRX(Constants.TALON_SRX_ID);
+    private final TalonSRX intakeMotor = new TalonSRX(Constants.INTAKE_MOTOR_ID);
     private double speed;
     
     public IntakeSubsystem() {

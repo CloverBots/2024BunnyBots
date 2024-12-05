@@ -138,7 +138,6 @@ public class SuperstructureCommand extends Command {
                 break;
 
             case BLOWER:
-                blowerSubsystem.runBlower();
                 break;
         }
     }
@@ -183,7 +182,7 @@ public class SuperstructureCommand extends Command {
                 break;
 
             case BLOWER:
-                blowerSubsystem.stop();
+                blowerSubsystem.runBlower();
                 break;
         }
     }
