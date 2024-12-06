@@ -110,7 +110,7 @@ public class SuperstructureCommand extends Command {
                     ballonLoaded = false;
                     timer.reset();
                     timer.start();
-                    intakeSubsystem.setIntakeSpeed(-SuperstructureConstants.INTAKE_SPEED);
+                    intakeSubsystem.setIntakeSpeed(SuperstructureConstants.OUTTAKE_SPEED);
                 }
                 break;
 
@@ -158,6 +158,9 @@ public class SuperstructureCommand extends Command {
         } else if (blowButton.get()) {
             mode = ACTION.BLOWER;
             modeChanged = true;
+        } else if (mode == ACTION.BLOWER && !blowButton.get()) {
+            mode = ACTION.PARK;
+            modeChanged = true;
         }
     }
 
@@ -166,6 +169,9 @@ public class SuperstructureCommand extends Command {
 
         switch (mode) {
             case INTAKE:
+                pivotSubsystem.setPivotPosition(SuperstructureConstants.INTAKE_SET_POINT);
+                break;
+
             case SCORE:
                 break;
 
@@ -175,6 +181,7 @@ public class SuperstructureCommand extends Command {
 
             case PARK:
                 pivotSubsystem.setPivotPosition(SuperstructureConstants.PARK_SET_POINT);
+                blowerSubsystem.stop();
                 break;
 
             case PIVOT_MANUAL:
@@ -217,7 +224,7 @@ public class SuperstructureCommand extends Command {
             case PREPARE_TO_SCORE:
                 break;
             case SCORE:
-                if (firing && timer.get() > 1) { // TO-DO tune time
+                if (timer.get() > SuperstructureConstants.OUTTAKE_TIME) { // TO-DO tune time
                     firing = false;
                     mode = ACTION.PARK;
                     modeChanged = true;

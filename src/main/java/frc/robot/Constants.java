@@ -86,6 +86,8 @@ public final class Constants {
 
     public static final class SuperstructureConstants {
         public static final double INTAKE_SPEED = 0.2; //Increase after testing
+        public static final double OUTTAKE_SPEED = -0.1; 
+         public static final double OUTTAKE_TIME = 1; // seconds 
         public static final double LOWER_ENDPOINT = 0; //TO-DO set
         public static final double UPPER_ENDPOINT = 0;
 
