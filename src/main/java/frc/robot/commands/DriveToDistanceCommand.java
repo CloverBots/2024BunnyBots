@@ -13,8 +13,8 @@ import frc.robot.subsystems.SwerveSubsystem;
 public class DriveToDistanceCommand extends Command {
   private SwerveSubsystem swerveSubsystem;
 
-  private PIDController driveDistanceControllerX = new PIDController(7.0, 0.25, 0.1);
-  private PIDController driveDistanceControllerY = new PIDController(7.0, 0.25, 0.1);
+  private PIDController driveDistanceControllerX = new PIDController(.5, 0, 0);
+  private PIDController driveDistanceControllerY = new PIDController(.5, 0, 0);
   private PIDController rotationController = new PIDController(Math.PI, 0, 0);
 
   private Timer timer;
@@ -58,7 +58,7 @@ public class DriveToDistanceCommand extends Command {
 
     double dTheta = rotationController.calculate(Units.degreesToRadians(swerveSubsystem.getFieldAngle()));
     dTheta = Math.copySign(Math.min(Math.abs(dTheta),2), dTheta);
-    swerveSubsystem.setSpeed(xSpeed, ySpeed, -dTheta, true);
+    swerveSubsystem.defaultDrive(xSpeed, ySpeed, dTheta, true);
   }
 
   // Called once the command ends or is interrupted.
@@ -72,6 +72,5 @@ public class DriveToDistanceCommand extends Command {
   public boolean isFinished() {
     return (driveDistanceControllerX.atSetpoint() && driveDistanceControllerY.atSetpoint()) 
     || (timer.get() >= timeout);
-  
   }
 }

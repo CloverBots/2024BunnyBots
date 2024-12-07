@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AutoAimCommand;
 import frc.robot.commands.AutoScoreCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.SuperstructureCommand;
@@ -35,6 +37,8 @@ public class RobotContainer {
     private final PivotSubsystem pivotSubsystem = new PivotSubsystem();
     private final BlowerSubsystem blowerSubsystem = new BlowerSubsystem();
 
+    private final AutoAimCommand test = new AutoAimCommand(swerveSubsystem, visionTargetTracker, 10);
+
     private final XboxController driverController = new XboxController(Constants.CONTROLLER_DRIVE_PORT);
     private final XboxController operatorController = new XboxController(Constants.CONTROLLER_OPERATOR_PORT);
 
@@ -42,8 +46,8 @@ public class RobotContainer {
             pivotSubsystem, intakeSubsystem, blowerSubsystem,
             driverController::getRightTriggerAxis,
             driverController::getLeftBumper,
-            operatorController::getBackButton,
             driverController::getRightBumper,
+            operatorController::getBackButton,
             operatorController::getLeftY,
             operatorController::getBButton);
 
@@ -81,7 +85,7 @@ public class RobotContainer {
     }
 
     public void teleopInit() {
-        intakeSubsystem.setDefaultCommand(superstructureCommand);
+        blowerSubsystem.setDefaultCommand(superstructureCommand);
     }
 
     public void teleopPeriodic() {
@@ -109,10 +113,15 @@ public class RobotContainer {
     /** Will run once any time the robot is disabled. */
     public void disabledInit() {}
 
-    private void configureBindings() {}
+    private void configureBindings() {
+        JoystickButton _test = new JoystickButton(operatorController, XboxController.Button.kA.value);
+        _test.onTrue(test);
+
+    }
 
     private void configureAutoCommands() {
         NamedCommands.registerCommand("Score", new AutoScoreCommand(swerveSubsystem, pivotSubsystem, intakeSubsystem, visionTargetTracker));
+        NamedCommands.registerCommand("Aim", test);
     }
 
     private double squared(double input) {

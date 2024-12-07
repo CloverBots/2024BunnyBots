@@ -1,10 +1,7 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.SwerveSubsystem;
 import limelight.LimelightTargetTracking;
 
@@ -27,31 +24,25 @@ public class AutoAimCommand extends Command {
     public void initialize() {
         timer.reset();
         timer.start();
-        swerveSubsystem.setRotationOverride(true);
+        swerveSubsystem.rotationOverride = true;
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (RobotContainer.getAlliance() == Alliance.Blue) {
-            swerveSubsystem.setRotationTarget(Rotation2d.fromDegrees(limelightTargetTracker.getAngleToTote()));
-        } else {
-            swerveSubsystem.setRotationTarget(Rotation2d.fromDegrees(limelightTargetTracker.getAngleToTote())
-                    .rotateBy(Rotation2d.fromDegrees(180)));
-        }
+        swerveSubsystem.defaultDrive(0, 0.05, 0);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        timer.stop();
-        swerveSubsystem.setRotationOverride(false);
+        swerveSubsystem.stopModules();
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (limelightTargetTracker.getAngleToTote() < 3 || timer.get() > time) {
+        if ((limelightTargetTracker.getAngleToTote() <= 1 && limelightTargetTracker.getAngleToTote() >= -1) || timer.get() > time) {
             return true;
         } else {
             return false;

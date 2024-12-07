@@ -14,6 +14,7 @@ public class IntakeSubsystem extends SubsystemBase {
     
     public IntakeSubsystem() {
         intakeMotor.setNeutralMode(NeutralMode.Brake);
+        intakeMotor.setInverted(true);
         intakeMotor.configContinuousCurrentLimit(30);
     }
 
@@ -21,17 +22,14 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
     }
 
-    public void runIntake(double speed) {
+    public void setIntakeSpeed(double speed) {
         this.speed = speed;
     }
 
     public void runIntake() {
-        runIntake(SuperstructureConstants.INTAKE_SPEED);
+        setIntakeSpeed(SuperstructureConstants.INTAKE_SPEED);
     }
 
-    public void setIntakeSpeed(double speed) {
-        intakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
-    }
 
     public void stop() {
         speed = 0;

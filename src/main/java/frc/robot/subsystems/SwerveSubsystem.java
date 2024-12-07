@@ -201,29 +201,6 @@ public class SwerveSubsystem extends SubsystemBase {
     return positions;
   }
 
-  public void setSpeed(double vx, double vy, double omegaDegreesPerSecond, boolean fieldOriented) {
-    setSpeed(new ChassisSpeeds(vx, vy, Units.degreesToRadians(omegaDegreesPerSecond)), fieldOriented);
-  }
-
-  public void setSpeed(ChassisSpeeds chassisSpeeds, boolean fieldOriented) {
-    if (fieldOriented) {
-      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-          chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond,
-          chassisSpeeds.omegaRadiansPerSecond, getPose().getRotation());
-    } else {
-      chassisSpeeds = new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond,
-          chassisSpeeds.omegaRadiansPerSecond);
-    }
-
-    // This will take the speeds that we want our robot to move and turn at, and
-    // calculate the required direction and speed for each swerve module on the
-    // robot.
-    SwerveModuleState[] moduleStates = kinematics.toSwerveModuleStates(chassisSpeeds);
-
-    // Set the swerve modules to their required states.
-    setModuleStates(moduleStates);
-  }
-
   @Override
   public void periodic() {
     var positions = getPositions();
@@ -241,7 +218,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void stopModules() {
-    setSpeed(0, 0, 0, true);
+    defaultDrive(0, 0, 0, false);
   }
 
   public boolean getRotationOverride() {

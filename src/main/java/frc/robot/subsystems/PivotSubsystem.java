@@ -16,14 +16,14 @@ public class PivotSubsystem extends PIDSubsystem {
     double speed = 0;
 
     public PivotSubsystem() {
-        super(new PIDController(0.02, 0.0045, 0));
+        super(new PIDController(0.08, 0, 0)); // .02 .0045
         getController().setTolerance(0.5);
         getController().enableContinuousInput(0, 360); // Sets the PID to treat zero and 2 pi as the same value.
         disable(); // start with PID disabled
 
         pivotMotor = new CANSparkMax(Constants.PIVOT_MOTOR, MotorType.kBrushless);
 
-        pivotMotor.setInverted(true);
+        pivotMotor.setInverted(false);
 
         pivotMotor.setIdleMode(IdleMode.kBrake);
 
@@ -37,7 +37,7 @@ public class PivotSubsystem extends PIDSubsystem {
 
     @Override
     public void useOutput(double output, double setpoint) {
-        output = MathUtil.clamp(output, -0.1, 0.1);
+        output = MathUtil.clamp(output, -0.4, 1);
         speed = output;
         if (pivotMotor != null) {
             pivotMotor.set(speed);
@@ -45,7 +45,7 @@ public class PivotSubsystem extends PIDSubsystem {
     }
 
     public void resetPivotEncoder() {
-        pivotMotor.getEncoder().setPosition(getPivotPosition());
+        pivotMotor.getEncoder().setPosition(0);
     }
 
     public void setSpeed(double speed) {
@@ -70,7 +70,7 @@ public class PivotSubsystem extends PIDSubsystem {
     }
 
     public boolean pivotReady() {
-        if (Math.abs(getPivotPosition() - getSetpoint()) < 2) {
+        if (Math.abs(getPivotPosition() - getSetpoint()) < 0.5) {
             return true;
         } else {
             return false;

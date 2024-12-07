@@ -78,14 +78,20 @@ public class SuperstructureCommand extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        pivotSubsystem.setPivotPosition(SuperstructureConstants.PARK_SET_POINT);
-        pivotSubsystem.enable();
+        //pivotSubsystem.setPivotPosition(SuperstructureConstants.PARK_SET_POINT);
+        //pivotSubsystem.enable();
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
         SmartDashboard.putBoolean("Ballon Loaded", ballonLoaded);
+
+        if (timeOfFlightSubsystem.isBallonLoaded()) {
+            ballonLoaded = true;
+        } else {
+            ballonLoaded = false;
+        }
 
         checkControllerValues();
 
@@ -110,20 +116,20 @@ public class SuperstructureCommand extends Command {
                     ballonLoaded = false;
                     timer.reset();
                     timer.start();
-                    intakeSubsystem.setIntakeSpeed(SuperstructureConstants.OUTTAKE_SPEED);
                 }
+                intakeSubsystem.setIntakeSpeed(SuperstructureConstants.OUTTAKE_SPEED);
                 break;
 
             case PIVOT_MANUAL:
                 if (Math.abs(leftJoystickY.getAsDouble()) > .05) {
                     pivotSpeed = -leftJoystickY.getAsDouble() / 2.2;
                     if (pivotSpeed > 0.05 &&
-                            pivotSubsystem.getPivotPosition() > SuperstructureConstants.UPPER_ENDPOINT) {
+                            pivotSubsystem.getPivotPosition() > SuperstructureConstants.MANUAL_PARK_STOP) {
                         pivotSpeed = 0;
                     }
 
                     if (pivotSpeed < -.05 &&
-                            pivotSubsystem.getPivotPosition() < SuperstructureConstants.LOWER_ENDPOINT) {
+                            pivotSubsystem.getPivotPosition() < SuperstructureConstants.INTAKE_SET_POINT) {
                         pivotSpeed = 0;
                     }
 
@@ -134,7 +140,6 @@ public class SuperstructureCommand extends Command {
                 } else {
                     pivotSubsystem.setSpeed(0);
                 }
-
                 break;
 
             case BLOWER:
@@ -210,12 +215,12 @@ public class SuperstructureCommand extends Command {
         switch (mode) {
             case INTAKE:
                 if (timeOfFlightSubsystem.isBallonLoaded()) {
-                    intakeSubsystem.setIntakeSpeed(0);
+                    intakeSubsystem.stop();
                     mode = ACTION.PARK;
                     modeChanged = true;
                     ballonLoaded = true;
-                } else if (intakeLoadTrigger.get() < 0.5 && intakeSubsystem.getSpeed() > 0.1) {
-                    intakeSubsystem.setIntakeSpeed(0);
+                } else if (intakeLoadTrigger.get() < 0.5) {
+                    intakeSubsystem.stop();
                     mode = ACTION.PARK;
                     modeChanged = true;
                 }
@@ -225,6 +230,7 @@ public class SuperstructureCommand extends Command {
                 break;
             case SCORE:
                 if (timer.get() > SuperstructureConstants.OUTTAKE_TIME) { // TO-DO tune time
+                    intakeSubsystem.stop();
                     firing = false;
                     mode = ACTION.PARK;
                     modeChanged = true;
