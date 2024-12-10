@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.118864703371746,
-        "y": 4.704598804950918
+        "x": 6.1501762933350586,
+        "y": 4.9037592501905
       },
       "isLocked": false,
       "linkedName": "BLUE Center"
     },
     {
       "anchor": {
-        "x": 4.11,
-        "y": 6.2
+        "x": 5.0,
+        "y": 6.15
       },
       "prevControl": {
-        "x": 4.8056177976952625,
-        "y": 5.690949637217244
+        "x": 5.548486435345903,
+        "y": 5.549463148490463
       },
       "nextControl": null,
       "isLocked": false,

@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 10.029742851045668,
-        "y": 3.622252454118651
+        "x": 9.976482776482777,
+        "y": 3.4819606319606318
       },
       "isLocked": false,
       "linkedName": "RED Center"
     },
     {
       "anchor": {
-        "x": 12.34,
+        "x": 11.3,
         "y": 2.03
       },
       "prevControl": {
-        "x": 11.602752880921894,
-        "y": 2.5687686726419123
+        "x": 10.64905464905465,
+        "y": 2.6412457912457907
       },
       "nextControl": null,
       "isLocked": false,

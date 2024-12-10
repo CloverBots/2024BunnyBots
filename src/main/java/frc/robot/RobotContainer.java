@@ -114,9 +114,8 @@ public class RobotContainer {
     public void disabledInit() {}
 
     private void configureBindings() {
-        JoystickButton _test = new JoystickButton(operatorController, XboxController.Button.kA.value);
+        JoystickButton _test = new JoystickButton(operatorController, XboxController.Button.kBack.value);
         _test.onTrue(test);
-
     }
 
     private void configureAutoCommands() {
