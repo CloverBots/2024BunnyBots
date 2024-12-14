@@ -32,8 +32,7 @@ public final class Constants {
         public static final double PHYSICAL_MAX_ROTATION_SPEED = PHYSICAL_MAX_SPEED_METERS_PER_SECOND / ModuleLocations.robotRadius;
 
         // Set speeds for the robot when moving, in Meters/Second
-        public static final double TELEOP_MAX_SPEED_METERS_PER_SECOND = 3;
-        public static final double AUTO_MAX_SPEED_METERS_PER_SECOND = 2;
+        public static final double AUTO_MAX_SPEED_METERS_PER_SECOND = 1;
 
         // Rotation speed multiplier to the (-1, 1) input given by the joystick
         public static final double TELEOP_NORMAL_ANGULAR_SCALE_FACTOR = 0.1;
@@ -85,8 +84,8 @@ public final class Constants {
     }
 
     public static final class SuperstructureConstants {
-        public static final double INTAKE_SPEED = 0.3; //Increase after testing
-        public static final double OUTTAKE_SPEED = -0.15; 
+        public static final double INTAKE_SPEED = 1; //Increase after testing
+        public static final double OUTTAKE_SPEED = -0.4; 
          public static final double OUTTAKE_TIME = 1; // seconds 
         public static final double LOWER_ENDPOINT = -19; //TO-DO set
         public static final double UPPER_ENDPOINT = 0;
@@ -94,7 +93,7 @@ public final class Constants {
         public static final double PARK_SET_POINT = -3;
         public static final double MANUAL_PARK_STOP = -1;
         public static final double SCORE_SET_POINT = -10;
-        public static final double INTAKE_SET_POINT = -18;
+        public static final double INTAKE_SET_POINT = -19;
 
         public static final double BLOWER_SPEED = 1;
     }

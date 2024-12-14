@@ -30,7 +30,7 @@ public class AutoAimCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        swerveSubsystem.defaultDrive(0, 0.05, 0);
+        swerveSubsystem.defaultDrive(-0.05, 0, 0);
     }
 
     // Called once the command ends or is interrupted.

@@ -39,6 +39,8 @@ public class RobotContainer {
 
     private final AutoAimCommand test = new AutoAimCommand(swerveSubsystem, visionTargetTracker, 10);
 
+    private final AutoScoreCommand testScore = new AutoScoreCommand(swerveSubsystem, pivotSubsystem, intakeSubsystem, visionTargetTracker);
+
     private final XboxController driverController = new XboxController(Constants.CONTROLLER_DRIVE_PORT);
     private final XboxController operatorController = new XboxController(Constants.CONTROLLER_OPERATOR_PORT);
 
@@ -115,7 +117,7 @@ public class RobotContainer {
 
     private void configureBindings() {
         JoystickButton _test = new JoystickButton(operatorController, XboxController.Button.kBack.value);
-        _test.onTrue(test);
+        _test.onTrue(testScore);
     }
 
     private void configureAutoCommands() {

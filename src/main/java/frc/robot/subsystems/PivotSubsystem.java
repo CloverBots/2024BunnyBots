@@ -37,7 +37,7 @@ public class PivotSubsystem extends PIDSubsystem {
 
     @Override
     public void useOutput(double output, double setpoint) {
-        output = MathUtil.clamp(output, -0.4, 1);
+        output = MathUtil.clamp(output, -0.3, 1);
         speed = output;
         if (pivotMotor != null) {
             pivotMotor.set(speed);

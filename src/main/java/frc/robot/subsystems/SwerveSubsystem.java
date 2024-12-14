@@ -157,7 +157,7 @@ public class SwerveSubsystem extends SubsystemBase {
         new Translation2d(Units.inchesToMeters(4), 0));
 
     SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates,
-        Constants.DriveConstants.TELEOP_MAX_SPEED_METERS_PER_SECOND);
+        Constants.DriveConstants.PHYSICAL_MAX_SPEED_METERS_PER_SECOND);
 
     this.frontLeft.drive(moduleStates[0]);
     this.frontRight.drive(moduleStates[1]);
@@ -181,6 +181,9 @@ public class SwerveSubsystem extends SubsystemBase {
     odometry.resetPosition(gyro.getRotation2d(), getPositions(), pose2d);
   }
 
+  public void resetGyro() {
+    gyro.setYaw(0);
+  }
   public ChassisSpeeds getCurrentSpeeds() {
     return kinematics.toChassisSpeeds(getModuleStates());
   }
