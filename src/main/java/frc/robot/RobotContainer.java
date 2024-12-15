@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AutoAimCommand;
+import frc.robot.commands.AutoBlowCommand;
 import frc.robot.commands.AutoScoreCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.SuperstructureCommand;
@@ -123,6 +124,7 @@ public class RobotContainer {
     private void configureAutoCommands() {
         NamedCommands.registerCommand("Score", new AutoScoreCommand(swerveSubsystem, pivotSubsystem, intakeSubsystem, visionTargetTracker));
         NamedCommands.registerCommand("Aim", test);
+        NamedCommands.registerCommand("Blow", new AutoBlowCommand(blowerSubsystem, 10));
     }
 
     private double squared(double input) {
